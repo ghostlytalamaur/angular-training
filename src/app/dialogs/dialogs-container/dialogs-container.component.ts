@@ -46,7 +46,6 @@ export class DialogsContainerComponent implements OnInit, OnDestroy {
   }
 
   openDialog<C>(config: DialogConfig<C>): DialogRef<C> {
-    console.log(this.viewContainerRef);
     const factory = this.factoryResolver.resolveComponentFactory(DialogWindowComponent);
     const id = this.generateNewDialogId();
     const controller = this.createController(id);
@@ -106,7 +105,7 @@ export class DialogsContainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getDialog(dialogId: string): ComponentRef<any> | undefined {
+  private getDialog(dialogId: string): ComponentRef<DialogWindowComponent> | undefined {
     return this.dialogsMap.get(dialogId);
   }
 
