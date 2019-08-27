@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+  height: 100%;
+}
+
+.side-nav {
+  border-right: 1px solid bisque;
+  width: 200px;
+  margin-right: 8px;
+}
+
+.content {
+  width: 100%;
+}

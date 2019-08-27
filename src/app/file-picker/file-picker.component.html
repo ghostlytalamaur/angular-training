@@ -1,0 +1,74 @@
+<div *ngIf="this.dataSource.data.length > 0; else selectButtonTemplate">
+  <button (click)="onUpload()" class="m-8" color="primary" mat-raised-button>Upload</button>
+  <button (click)="onClear()" class="m-8" color="warn" id="clearBtn" mat-raised-button>Clear</button>
+  <p>
+    {{ this.selection.selected.length | i18nPlural:{
+      '=0': 'No files selected',
+      '=1': '# file selected',
+      'other': '# files selected'
+  } }}.
+    <ng-container *ngIf="selection.selected.length > 0">
+      Total Size: {{ summarySize | bytes }}
+    </ng-container>
+  </p>
+
+  <mat-progress-bar
+    [value]="readProgress | async"
+    mode="determinate"
+  ></mat-progress-bar>
+</div>
+
+<div class="scrollable files-tree">
+  <mat-tree
+    [dataSource]="dataSource"
+    [treeControl]="treeControl"
+  >
+    <!--file node-->
+    <mat-tree-node
+      *matTreeNodeDef="let node"
+      class="mat-tree-node"
+      matTreeNodePadding
+    >
+      <button disabled mat-icon-button></button>
+      <mat-checkbox
+        (change)="onFileSelectionToggle(node)"
+        [checked]="selection.isSelected(node)"
+      >{{ node.name }}</mat-checkbox>
+    </mat-tree-node>
+
+    <!--folder node-->
+    <mat-tree-node
+      *matTreeNodeDef="let node; when hasChild"
+      class="mat-tree-node"
+      matTreeNodePadding
+    >
+      <button mat-icon-button matTreeNodeToggle>
+        <mat-icon>{{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}</mat-icon>
+      </button>
+
+      <mat-checkbox
+        (change)="onFolderSelectionToggle(node)"
+        [checked]="isAllDescendantsSelected(node)"
+        [indeterminate]="isSomeDescendantsSelected(node)"
+      >{{ node.name }}
+      </mat-checkbox>
+
+    </mat-tree-node>
+  </mat-tree>
+</div>
+
+
+<ng-template #selectButtonTemplate>
+  <div>
+    <button (click)="selectBtn.click()" mat-raised-button>Select folder</button>
+    <input
+        #selectBtn
+        (change)="onFileAdded($event)"
+        hidden
+        id="selectBtn"
+        multiple="true"
+        type="file"
+        webkitDirectory
+    >
+  </div>
+</ng-template>

@@ -1,0 +1,12 @@
+<div class="header">
+  <div #dragHandle class="title">{{ config.title }}</div>
+  <button (click)="onClose()" color="warn" mat-button>❌</button>
+</div>
+<div class="dialog-content">
+  <ng-container *ngComponentOutlet="config.component"></ng-container>
+</div>
+<div class="actions">
+  <button color="primary" mat-flat-button>Ok</button>
+  <button color="warn" mat-flat-button>Cancel</button>
+  <button color="accent" mat-flat-button>Help</button>
+</div>

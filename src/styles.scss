@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.bordered {
+  border: 1px solid cornflowerblue;
+}
+
+.invisible {
+  display: none;
+}
+
+.pl-8 {
+  padding-left: 8px;
+}
+
+.m-8 {
+  margin: 8px;
+}
+
+.mouse-pointer {
+  cursor: pointer;
+}
+
+.scrollable {
+  overflow: auto;
+}
+
+.card {
+  border: 1px solid bisque;
+  border-radius: 4px;
+  padding: 8px;
+  display: flex;
+
+  // each card must be min 200px width
+  flex: 200px;
+}
