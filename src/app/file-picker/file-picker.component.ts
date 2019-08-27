@@ -68,7 +68,9 @@ export class FilePickerComponent implements OnInit {
       flatNode => flatNode.level,
       flatNode => flatNode.expandable,
       node => FilePickerComponent.getChildren(node));
-    this.treeControl = new FlatTreeControl<FlatNode>(this.getLevel, this.isExpandable);
+    this.treeControl = new FlatTreeControl<FlatNode>(
+      flatNode => flatNode.level,
+      flatNode => flatNode.expandable);
     this.treeControl.dataNodes = [];
     this.dataSource = new MatTreeFlatDataSource<Node, FlatNode>(this.treeControl, this.flattener, []);
     this.selection = new SelectionModel<FlatNode>(true);
@@ -230,7 +232,7 @@ export class FilePickerComponent implements OnInit {
   }
 
   private getParentNode(flatNode: FlatNode): FlatNode | undefined {
-    const level = this.getLevel(flatNode);
+    const level = flatNode.level;
     if (level < 1) {
       return undefined;
     }
@@ -238,7 +240,7 @@ export class FilePickerComponent implements OnInit {
     const startIndex = this.treeControl.dataNodes.indexOf(flatNode) - 1;
     for (let i = startIndex; i >= 0; i--) {
       const node = this.treeControl.dataNodes[i];
-      if (this.getLevel(node) < level) {
+      if (node.level < level) {
         return node;
       }
     }
