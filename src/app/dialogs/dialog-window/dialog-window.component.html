@@ -1,12 +1,13 @@
 <div class="header">
   <div #dragHandle class="title">{{ config.title }}</div>
-  <button (click)="onClose()" color="warn" mat-button>❌</button>
+  <button (click)="onMaximise()" *ngIf="!config.blockMaximize" mat-button>
+    <mat-icon>{{ maximized ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+  </button>
+  <button (click)="onClose()" color="warn" mat-button>
+    <mat-icon>close</mat-icon>
+  </button>
 </div>
 <div class="dialog-content">
-  <ng-container *ngComponentOutlet="config.component"></ng-container>
-</div>
-<div class="actions">
-  <button color="primary" mat-flat-button>Ok</button>
-  <button color="warn" mat-flat-button>Cancel</button>
-  <button color="accent" mat-flat-button>Help</button>
+  <ng-template #viewContainer></ng-template>
+  <!--  <ng-container *ngComponentOutlet="config.component" [ngClass]="{'maximized': maximized}"></ng-container>-->
 </div>

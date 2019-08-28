@@ -7,4 +7,6 @@ export interface DialogConfig<C> {
   component: Type<C>;
   // A custom injector to create component
   injector?: Injector;
+  // Doesn't allow maximize dialog. Default is false
+  blockMaximize?: boolean;
 }

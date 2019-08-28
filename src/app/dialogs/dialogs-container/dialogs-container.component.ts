@@ -50,7 +50,7 @@ export class DialogsContainerComponent implements OnInit, OnDestroy {
     const id = this.generateNewDialogId();
     const controller = this.createController(id);
     const dialogRef = new DialogRef<C>(controller);
-    const dialogInjector = this.createInjector(config, controller);
+    const dialogInjector = this.createInjector(config, dialogRef, controller);
 
     const componentRef = this.viewContainerRef.createComponent(factory, undefined, dialogInjector);
     this.dialogCreated(id, componentRef);
@@ -119,10 +119,11 @@ export class DialogsContainerComponent implements OnInit, OnDestroy {
     return `dialog_${this.counter}`;
   }
 
-  private createInjector<C>(config: DialogConfig<C>, controller: DialogController): Injector {
+  private createInjector<C>(config: DialogConfig<C>, dialogRef: DialogRef<C>, controller: DialogController): Injector {
     const tokens = new WeakMap<any, unknown>();
     tokens.set(DIALOG_CONTROLLER, controller);
     tokens.set(DIALOG_CONFIG, config);
+    tokens.set(DialogRef, dialogRef);
     return new PortalInjector(config.injector || this.injector, tokens);
   }
 

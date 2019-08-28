@@ -9,6 +9,7 @@
   border: 2px solid lightgrey;
   position: fixed;
   display: flex;
+  background-color: white;
   flex-flow: column nowrap;
 
   &:active {
@@ -17,6 +18,19 @@
   &.dragged {
     @include mat-elevation(12);
     opacity: 0.75;
+  }
+
+  &.maximized {
+    width: 100%;
+    height: 100%;
+
+    .dialog-content {
+      height: 100%;
+    }
+  }
+
+  &.draggable > .header > .title {
+    cursor: move;
   }
 }
 
@@ -27,7 +41,6 @@
   width: 100%;
   background-color: aliceblue;
   border-bottom: 1px solid lightgrey;
-  cursor: move;
 
   .title {
     width: 100%;
@@ -40,23 +53,6 @@
 .dialog-content {
   display: flex;
   flex-flow: row nowrap;
-  height: 200px;
   overflow: auto;
   background-color: white;
-}
-
-.actions {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-end;
-  border-top: 1px solid lightgrey;
-  background-color: white;
-
-  & > *:last-child {
-    margin: 8px 8px 8px 4px;
-  }
-
-  & > *:not(:last-child) {
-    margin: 8px 4px;
-  }
 }

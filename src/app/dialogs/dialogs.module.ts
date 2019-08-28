@@ -3,7 +3,7 @@ import { DialogsContainerComponent } from './dialogs-container/dialogs-container
 import { DialogWindowComponent } from './dialog-window/dialog-window.component';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatIconModule } from '@angular/material';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
@@ -19,7 +19,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
     CommonModule,
     MatButtonModule,
     DragDropModule,
-    OverlayModule
+    OverlayModule,
+    MatIconModule
   ]
 })
 export class DialogsModule {
