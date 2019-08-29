@@ -3,7 +3,7 @@ import { DialogRef } from '../../dialogs/dialog-ref';
 
 @Component({
   template: `
-      <div class="content">
+      <app-dialog-content>
           <div class="main-content">
               <p>
                   At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti
@@ -30,10 +30,10 @@ import { DialogRef } from '../../dialogs/dialog-ref';
                   doloribus asperiores repellat.
               </p>
           </div>
-          <div class="actions">
-              <button mat-flat-button (click)="onCancel()" color="warn">Cancel</button>
-          </div>
-      </div>
+          <app-dialog-actions>
+              <button mat-flat-button (click)="onCancel()" appDlgClose color="warn">Cancel</button>
+          </app-dialog-actions>
+      </app-dialog-content>
   `,
   styleUrls: ['sample-dialog-content.component.scss']
 })
@@ -45,6 +45,7 @@ export class SampleDialogContentComponent {
   }
 
   onCancel(): void {
-    this.dlgRef.close();
+    // this.dlgRef.close();
+    console.log('Cancel button clicked');
   }
 }

@@ -3,11 +3,10 @@
   <button (click)="onMaximise()" *ngIf="!config.blockMaximize" mat-button>
     <mat-icon>{{ maximized ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
   </button>
-  <button (click)="onClose()" color="warn" mat-button>
+  <button appDlgClose color="warn" mat-button>
     <mat-icon>close</mat-icon>
   </button>
 </div>
 <div class="dialog-content">
   <ng-template #viewContainer></ng-template>
-  <!--  <ng-container *ngComponentOutlet="config.component" [ngClass]="{'maximized': maximized}"></ng-container>-->
 </div>

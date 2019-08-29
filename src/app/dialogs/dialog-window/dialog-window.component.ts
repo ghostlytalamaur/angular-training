@@ -16,12 +16,13 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { DialogController } from '../dialog-ref';
 import { DragDrop, DragRef } from '@angular/cdk/drag-drop';
 import { DialogConfig } from '../dialog-config';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Point } from '@angular/cdk/drag-drop/typings/drag-ref';
+import { DialogController } from '../dialog-controller';
+import { DialogInterface } from './dialog-interface';
 
 export const DIALOG_CONFIG = new InjectionToken('dialog-config');
 export const DIALOG_CONTROLLER = new InjectionToken('dialog-controller');
@@ -31,7 +32,7 @@ export const DIALOG_CONTROLLER = new InjectionToken('dialog-controller');
   styleUrls: ['./dialog-window.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DialogWindowComponent implements OnInit, OnDestroy, AfterViewInit {
+export class DialogWindowComponent implements OnInit, OnDestroy, AfterViewInit, DialogInterface {
 
   @ViewChild('dragHandle', { static: true })
   dragHandle: ElementRef<HTMLElement>;
@@ -41,13 +42,14 @@ export class DialogWindowComponent implements OnInit, OnDestroy, AfterViewInit {
   draggable: boolean;
   @HostBinding('class.maximized')
   maximized: boolean;
+  @HostBinding('style.z-index')
+  zIndex: number;
   @ViewChild('viewContainer', { static: true, read: ViewContainerRef })
   viewContainerRef: ViewContainerRef;
   component: ComponentRef<any>;
 
   private alive$: Subject<void> = new Subject<void>();
-  private dragRef: DragRef<any>;
-  private storedPos: Readonly<Point>;
+  dragRef: DragRef<any>;
 
   constructor(
     private readonly dragDrop: DragDrop,
@@ -82,23 +84,8 @@ export class DialogWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     this.controller.bringToFront();
   }
 
-  onClose(): void {
-    this.controller.close();
-  }
-
   onMaximise(): void {
-    console.log(this.component);
-    this.maximized = !this.maximized;
-    if (this.maximized) {
-      this.storedPos = this.dragRef.getFreeDragPosition();
-      this.dragRef.reset();
-      this.disableDrag();
-      this.renderer2.addClass(this.component.location.nativeElement, 'maximized');
-    } else {
-      this.renderer2.removeClass(this.component.location.nativeElement, 'maximized');
-      this.enableDrag();
-      this.dragRef.setFreeDragPosition(this.storedPos);
-    }
+    this.controller.toggleMaximize();
   }
 
   private moveToCenter(): void {
@@ -130,13 +117,37 @@ export class DialogWindowComponent implements OnInit, OnDestroy, AfterViewInit {
     this.enableDrag();
   }
 
-  private enableDrag(): void {
+  enableDrag(): void {
     this.dragRef.enableHandle(this.dragHandle.nativeElement);
     this.draggable = true;
   }
 
-  private disableDrag(): void {
+  disableDrag(): void {
     this.dragRef.disableHandle(this.dragHandle.nativeElement);
     this.draggable = false;
+  }
+
+  getPosition(): Point {
+    return this.dragRef.getFreeDragPosition();
+  }
+
+  setPosition(newPos: Point): void {
+    this.dragRef.setFreeDragPosition(newPos);
+  }
+
+  resetPosition(): void {
+    this.dragRef.reset();
+  }
+
+  setZIndex(zIndex: number): void {
+    this.zIndex = zIndex;
+  }
+
+  setMaximized(isMaximized: boolean): void {
+    this.maximized = isMaximized;
+  }
+
+  getMaximized(): boolean {
+    return this.maximized;
   }
 }

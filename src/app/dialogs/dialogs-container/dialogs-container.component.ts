@@ -1,48 +1,28 @@
-import {
-  Component,
-  ComponentFactoryResolver,
-  ComponentRef,
-  Injector,
-  OnDestroy,
-  OnInit,
-  Renderer2,
-  ViewChild,
-  ViewContainerRef,
-  ViewRef
-} from '@angular/core';
+import { Component, ComponentFactoryResolver, Injector, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 import { PortalInjector } from '@angular/cdk/portal';
-import { DialogController, DialogRef } from '../dialog-ref';
 import { DialogConfig } from '../dialog-config';
 import { DIALOG_CONFIG, DIALOG_CONTROLLER, DialogWindowComponent } from '../dialog-window/dialog-window.component';
+import { DialogRef } from '../dialog-ref';
+import { DialogController } from '../dialog-controller';
+import { DialogsContainerService } from './dialogs-container.service';
 
 @Component({
   templateUrl: './dialogs-container.component.html',
-  styleUrls: ['./dialogs-container.component.scss']
+  styleUrls: ['./dialogs-container.component.scss'],
+  providers: [DialogsContainerService]
 })
-export class DialogsContainerComponent implements OnInit, OnDestroy {
+export class DialogsContainerComponent {
 
   @ViewChild('viewContainer', { static: true, read: ViewContainerRef })
   viewContainerRef: ViewContainerRef;
-  private dialogsMap: Map<string, ComponentRef<any>>;
   private counter = 0;
-  private stack: string[] = [];
 
   constructor(
     private readonly factoryResolver: ComponentFactoryResolver,
     private readonly injector: Injector,
-    private readonly renderer2: Renderer2
+    private readonly renderer2: Renderer2,
+    private readonly dialogs: DialogsContainerService
   ) {
-    this.dialogsMap = new Map<string, ComponentRef<any>>();
-  }
-
-  ngOnInit(): void {
-  }
-
-  ngOnDestroy(): void {
-    for (const dialogId of this.dialogsMap.keys()) {
-      this.closeDialog(dialogId);
-    }
-    this.dialogsMap.clear();
   }
 
   openDialog<C>(config: DialogConfig<C>): DialogRef<C> {
@@ -53,70 +33,9 @@ export class DialogsContainerComponent implements OnInit, OnDestroy {
     const dialogInjector = this.createInjector(config, dialogRef, controller);
 
     const componentRef = this.viewContainerRef.createComponent(factory, undefined, dialogInjector);
-    this.dialogCreated(id, componentRef);
+    controller.attachDialog(componentRef.instance, componentRef.hostView);
 
     return dialogRef;
-  }
-
-  closeDialog(dialogId: string) {
-    const viewRef = this.getViewRef(dialogId);
-    if (!viewRef) {
-      return;
-    }
-
-    const index = this.viewContainerRef.indexOf(viewRef);
-    if (index >= 0) {
-      this.viewContainerRef.remove(index);
-    }
-  }
-
-  private bringToFront(dialogId: string) {
-    const newStack: string[] = [];
-    newStack.push(dialogId);
-    for (const otherDialogId of this.stack) {
-      if (otherDialogId !== dialogId) {
-        newStack.push(otherDialogId);
-      }
-    }
-
-    const len = newStack.length;
-    for (const [index, id] of newStack.entries()) {
-      const componentRef = this.getDialog(id);
-      if (componentRef) {
-        this.renderer2.setStyle(componentRef.location.nativeElement, 'z-index', len - index);
-      }
-    }
-    this.stack = newStack;
-  }
-
-  private dialogCreated(dialogId: string, componentRef: ComponentRef<unknown>) {
-    console.log(`dialogCreated, id = ${dialogId}`);
-    this.dialogsMap.set(dialogId, componentRef);
-    componentRef.hostView.onDestroy(() => this.dialogDestroyed(dialogId));
-    this.bringToFront(dialogId);
-  }
-
-  private dialogDestroyed(dialogId: string) {
-    console.log(`dialogDestroyed, id = ${dialogId}`);
-    this.dialogsMap.delete(dialogId);
-    const index = this.stack.indexOf(dialogId);
-    if (index >= 0) {
-      this.stack.splice(index, 1);
-    }
-  }
-
-  private getDialog(dialogId: string): ComponentRef<DialogWindowComponent> | undefined {
-    return this.dialogsMap.get(dialogId);
-  }
-
-  private getViewRef(dialogId: string): ViewRef | undefined {
-    const componentRef = this.getDialog(dialogId);
-    return componentRef && componentRef.hostView;
-  }
-
-  private generateNewDialogId(): string {
-    this.counter++;
-    return `dialog_${this.counter}`;
   }
 
   private createInjector<C>(config: DialogConfig<C>, dialogRef: DialogRef<C>, controller: DialogController): Injector {
@@ -128,9 +47,11 @@ export class DialogsContainerComponent implements OnInit, OnDestroy {
   }
 
   private createController(dialogId: string): DialogController {
-    return {
-      close: () => this.closeDialog(dialogId),
-      bringToFront: () => this.bringToFront(dialogId)
-    };
+    return new DialogController(dialogId, this.renderer2, this.dialogs);
+  }
+
+  private generateNewDialogId(): string {
+    this.counter++;
+    return `dialog_${this.counter}`;
   }
 }
