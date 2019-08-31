@@ -2,72 +2,77 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ComponentFactoryResolver,
-  ComponentRef,
   ElementRef,
   HostBinding,
   HostListener,
   Inject,
   InjectionToken,
-  Injector,
   OnDestroy,
   OnInit,
   Renderer2,
   ViewChild,
-  ViewContainerRef
+  ViewEncapsulation
 } from '@angular/core';
 import { DragDrop, DragRef } from '@angular/cdk/drag-drop';
 import { DialogConfig } from '../dialog-config';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Point } from '@angular/cdk/drag-drop/typings/drag-ref';
-import { DialogController } from '../dialog-controller';
+import { DialogController } from './dialog-controller';
 import { DialogInterface } from './dialog-interface';
+import { ComponentPortal } from '@angular/cdk/portal';
 
 export const DIALOG_CONFIG = new InjectionToken('dialog-config');
 export const DIALOG_CONTROLLER = new InjectionToken('dialog-controller');
 
 @Component({
+  selector: 'app-dialog-window',
   templateUrl: './dialog-window.component.html',
   styleUrls: ['./dialog-window.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class DialogWindowComponent implements OnInit, OnDestroy, AfterViewInit, DialogInterface {
 
   @ViewChild('dragHandle', { static: true })
   dragHandle: ElementRef<HTMLElement>;
+
   @HostBinding('class.dragged')
   isDragged: boolean;
+
   @HostBinding('class.draggable')
   draggable: boolean;
+
   @HostBinding('class.maximized')
   maximized: boolean;
+
   @HostBinding('style.z-index')
   zIndex: number;
-  @ViewChild('viewContainer', { static: true, read: ViewContainerRef })
-  viewContainerRef: ViewContainerRef;
-  component: ComponentRef<any>;
 
   private alive$: Subject<void> = new Subject<void>();
   dragRef: DragRef<any>;
+  componentPortal: ComponentPortal<any>;
 
   constructor(
     private readonly dragDrop: DragDrop,
-    private readonly hostRef: ElementRef,
     private readonly renderer2: Renderer2,
     private readonly elementRef: ElementRef,
-    private readonly factoryResolver: ComponentFactoryResolver,
-    private readonly injector: Injector,
     @Inject(DIALOG_CONTROLLER) private readonly controller: DialogController,
     @Inject(DIALOG_CONFIG) private readonly config: DialogConfig<any>
   ) {
   }
 
   ngOnInit() {
-    const factory = this.factoryResolver.resolveComponentFactory(this.config.component);
-    this.component = this.viewContainerRef.createComponent(factory, undefined, this.injector);
-
     this.initDragDrop();
+    this.controller.maximized$
+      .pipe(
+        takeUntil(this.alive$)
+      )
+      .subscribe(
+        isMaximized => this.maximized = isMaximized
+      );
+
+    this.componentPortal = new ComponentPortal(this.config.component);
   }
 
   ngAfterViewInit(): void {
@@ -99,7 +104,7 @@ export class DialogWindowComponent implements OnInit, OnDestroy, AfterViewInit, 
 
   private initDragDrop(): void {
     const parent = this.renderer2.parentNode(this.elementRef.nativeElement) as HTMLElement;
-    this.dragRef = this.dragDrop.createDrag(this.hostRef)
+    this.dragRef = this.dragDrop.createDrag(this.elementRef)
       .withHandles([this.dragHandle])
       .withBoundaryElement(parent);
 

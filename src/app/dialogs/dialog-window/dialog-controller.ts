@@ -1,11 +1,14 @@
 import { Renderer2, ViewRef } from '@angular/core';
-import { DialogsContainerService } from './dialogs-container/dialogs-container.service';
-import { DialogInterface } from './dialog-window/dialog-interface';
+import { DialogsContainerService } from '../dialogs-container/dialogs-container.service';
+import { DialogInterface } from './dialog-interface';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export class DialogController {
   private dialog: DialogInterface | undefined;
   private hostView: ViewRef | undefined;
   private storedPos: { x: number, y: number };
+  private readonly maximized: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  readonly maximized$: Observable<boolean> = this.maximized.asObservable();
 
   constructor(
     private readonly id: string,
@@ -31,23 +34,23 @@ export class DialogController {
   }
 
   maximize(): void {
-    if (!this.dialog || this.dialog.getMaximized()) {
+    if (!this.dialog || this.maximized.value) {
       return;
     }
     this.storedPos = this.dialog.getPosition();
     this.dialog.resetPosition();
     this.dialog.disableDrag();
-    this.dialog.setMaximized(true);
+    this.maximized.next(true);
   }
 
   restore(): void {
-    if (!this.dialog || !this.dialog.getMaximized()) {
+    if (!this.dialog || !this.maximized.value) {
       return;
     }
 
     this.dialog.setPosition(this.storedPos);
     this.dialog.enableDrag();
-    this.dialog.setMaximized(false);
+    this.maximized.next(false);
   }
 
   toggleMaximize(): void {

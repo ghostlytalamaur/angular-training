@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
-import { DialogRef } from '../../dialogs/dialog-ref';
+import { Component, OnDestroy } from '@angular/core';
 
 @Component({
   template: `
-      <app-dialog-content>
-          <div class="main-content">
+      <app-dialog>
+          <app-dialog-content>
               <p>
-                  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti
+                  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque
+                  corrupti
                   quos
-                  dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt
+                  dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia
+                  deserunt
                   mollitia animi, id est laborum et dolorum fuga.
                   <br/>
                   <br/>
@@ -29,23 +30,22 @@ import { DialogRef } from '../../dialogs/dialog-ref';
                   perferendis
                   doloribus asperiores repellat.
               </p>
-          </div>
+          </app-dialog-content>
+
           <app-dialog-actions>
               <button mat-flat-button (click)="onCancel()" appDlgClose color="warn">Cancel</button>
           </app-dialog-actions>
-      </app-dialog-content>
+      </app-dialog>
   `,
   styleUrls: ['sample-dialog-content.component.scss']
 })
-export class SampleDialogContentComponent {
-
-  constructor(
-    private readonly dlgRef: DialogRef<SampleDialogContentComponent>
-  ) {
-  }
+export class SampleDialogContentComponent implements OnDestroy {
 
   onCancel(): void {
-    // this.dlgRef.close();
     console.log('Cancel button clicked');
+  }
+
+  ngOnDestroy(): void {
+    console.log('Component destroyed');
   }
 }

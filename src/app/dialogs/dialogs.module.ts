@@ -5,33 +5,37 @@ import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatButtonModule, MatIconModule } from '@angular/material';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { DialogCloseDirective } from './dialog-window/dialog-close.directive';
 import { DialogActionsComponent } from './dialog-window/dialog-actions/dialog-actions.component';
-import { DialogContentComponent } from './dialog-window/dialog-content/dialog-content.component';
+import { DialogComponent } from './dialog-window/dialog/dialog.component';
+import { PortalModule } from '@angular/cdk/portal';
+import { DialogCloseDirective, DialogContentDirective } from './dialog-window/dialog.directive';
 
 @NgModule({
   declarations: [
     DialogsContainerComponent,
     DialogWindowComponent,
-    DialogCloseDirective,
+    DialogComponent,
     DialogActionsComponent,
-    DialogContentComponent
+    DialogCloseDirective,
+    DialogContentDirective
   ],
   entryComponents: [
     DialogsContainerComponent,
     DialogWindowComponent
   ],
   exports: [
-    DialogCloseDirective,
+    DialogComponent,
     DialogActionsComponent,
-    DialogContentComponent
+    DialogCloseDirective,
+    DialogContentDirective
   ],
   imports: [
     CommonModule,
     MatButtonModule,
     DragDropModule,
     OverlayModule,
-    MatIconModule
+    MatIconModule,
+    PortalModule
   ]
 })
 export class DialogsModule {

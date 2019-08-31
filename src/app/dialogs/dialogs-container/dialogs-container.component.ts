@@ -3,11 +3,11 @@ import { PortalInjector } from '@angular/cdk/portal';
 import { DialogConfig } from '../dialog-config';
 import { DIALOG_CONFIG, DIALOG_CONTROLLER, DialogWindowComponent } from '../dialog-window/dialog-window.component';
 import { DialogRef } from '../dialog-ref';
-import { DialogController } from '../dialog-controller';
+import { DialogController } from '../dialog-window/dialog-controller';
 import { DialogsContainerService } from './dialogs-container.service';
 
 @Component({
-  templateUrl: './dialogs-container.component.html',
+  template: '<ng-template #viewContainer></ng-template>',
   styleUrls: ['./dialogs-container.component.scss'],
   providers: [DialogsContainerService]
 })

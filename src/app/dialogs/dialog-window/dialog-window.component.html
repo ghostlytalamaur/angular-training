@@ -7,6 +7,4 @@
     <mat-icon>close</mat-icon>
   </button>
 </div>
-<div class="dialog-content">
-  <ng-template #viewContainer></ng-template>
-</div>
+<ng-template [cdkPortalOutlet]="componentPortal"></ng-template>

@@ -1,0 +1,15 @@
+app-dialog {
+  display: flex;
+  flex-flow: column nowrap;
+
+  &.app-dialog-maximized {
+    width: 100%;
+    height: 100%;
+
+    .app-dialog-content {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+}

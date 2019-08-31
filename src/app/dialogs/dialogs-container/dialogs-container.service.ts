@@ -1,4 +1,4 @@
-import { DialogController } from '../dialog-controller';
+import { DialogController } from '../dialog-window/dialog-controller';
 
 export class DialogsContainerService {
   private dialogsMap: Map<string, DialogController>;

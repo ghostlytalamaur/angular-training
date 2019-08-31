@@ -1,4 +1,4 @@
-import { DialogController } from './dialog-controller';
+import { DialogController } from './dialog-window/dialog-controller';
 
 // public version of DialogController
 export class DialogRef<C> {

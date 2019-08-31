@@ -1,11 +1,11 @@
 app-dialog-actions {
-  .dialog-actions {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-end;
     border-top: 1px solid lightgrey;
     background-color: white;
     width: 100%;
+  margin: auto auto 0;
 
     & > *:last-child {
       margin: 8px 8px 8px 4px;
@@ -14,5 +14,4 @@ app-dialog-actions {
     & > *:not(:last-child) {
       margin: 8px 4px;
     }
-  }
 }

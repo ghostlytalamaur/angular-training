@@ -1,21 +1,10 @@
 :host {
-  width: 400px;
-
-  //&.maximized {
-  //  width: 100%;
-  //  height: 100%;
-  //
-  //  .content {
-  //    height: 100%;
-  //
-  //    .main-content {
-  //      height: 100%;
-  //    }
-  //  }
-  //}
+  width: 100%;
+  height: 100%;
 }
 
-.main-content {
+.app-dialog-content {
   overflow: auto;
+  width: 400px;
   height: 300px;
 }
