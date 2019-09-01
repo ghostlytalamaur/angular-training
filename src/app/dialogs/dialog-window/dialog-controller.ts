@@ -45,7 +45,7 @@ export class DialogController {
     );
     this.draggable.next(true);
 
-    this.overlayRef.overlayElement.addEventListener('click', () => this.bringToFront());
+    this.overlayRef.overlayElement.addEventListener('mousedown', () => this.bringToFront());
   }
 
   attachDialog(dialog: DialogInterface): void {

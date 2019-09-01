@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogsService } from '../../dialogs/dialogs.service';
 import { SampleDialogContentComponent } from './sample-dialog-content.component';
+import { DialogConfig } from '../../dialogs/dialog-config';
 
 @Component({
   selector: 'app-sample',
@@ -8,6 +9,11 @@ import { SampleDialogContentComponent } from './sample-dialog-content.component'
   styleUrls: ['./dialog-window-sample.component.scss']
 })
 export class DialogWindowSampleComponent implements OnInit {
+
+  config: DialogConfig<SampleDialogContentComponent> = {
+    title: 'Sample Dialog',
+    component: SampleDialogContentComponent
+  };
 
   constructor(
     private readonly dialog: DialogsService
@@ -18,9 +24,6 @@ export class DialogWindowSampleComponent implements OnInit {
   }
 
   onOpenDialog(): void {
-    this.dialog.open({
-      title: 'Sample dialog',
-      component: SampleDialogContentComponent
-    });
+    this.dialog.open(this.config);
   }
 }

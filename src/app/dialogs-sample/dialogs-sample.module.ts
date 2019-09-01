@@ -4,7 +4,8 @@ import { SampleDialogContentComponent } from './dialog-sample/sample-dialog-cont
 import { DialogsModule } from '../dialogs/dialogs.module';
 import { RouterModule } from '@angular/router';
 import { DialogWindowSampleComponent } from './dialog-sample/dialog-window-sample.component';
-import { MatButtonModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatInputModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -21,6 +22,9 @@ import { MatButtonModule, MatDialogModule } from '@angular/material';
     MatButtonModule,
     MatDialogModule,
     RouterModule.forChild([{ path: 'dialogs', component: DialogWindowSampleComponent }]),
+    MatInputModule,
+    MatCheckboxModule,
+    FormsModule,
   ]
 })
 export class DialogsSampleModule {

@@ -1,1 +1,12 @@
-<button (click)="onOpenDialog()" mat-button>Open dialog</button>
+<form (ngSubmit)="onOpenDialog()" class="" ngForm>
+  <mat-form-field>
+    <label for="title">Title</label>
+    <input [(ngModel)]="config.title" id="title" matInput name="title">
+  </mat-form-field>
+
+  <mat-checkbox [(ngModel)]="config.blockMaximize" name="blockMaximize">Block Maximize</mat-checkbox>
+
+  <div class="actions">
+    <button color="primary" mat-flat-button type="submit">Open dialog</button>
+  </div>
+</form>
