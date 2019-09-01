@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { DialogController } from '../dialog-controller';
+import { DIALOG_CONTROLLER, DialogController } from '../dialog-controller';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DIALOG_CONTROLLER } from '../dialog-window.component';
 
 @Component({
   selector: 'app-dialog',
@@ -13,7 +12,7 @@ import { DIALOG_CONTROLLER } from '../dialog-window.component';
 })
 export class DialogComponent implements OnInit, OnDestroy {
 
-  @HostBinding('class.app-dialog-maximized')
+  @HostBinding('class.app-dialog-window-maximized')
   maximized: boolean;
   private readonly alive$ = new Subject<void>();
 

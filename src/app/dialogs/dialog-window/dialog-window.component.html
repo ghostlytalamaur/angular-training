@@ -7,4 +7,4 @@
     <mat-icon>close</mat-icon>
   </button>
 </div>
-<ng-template [cdkPortalOutlet]="componentPortal"></ng-template>
+<ng-container *ngComponentOutlet="config.component"></ng-container>

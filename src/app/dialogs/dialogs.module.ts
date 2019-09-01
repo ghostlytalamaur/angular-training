@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { DialogsContainerComponent } from './dialogs-container/dialogs-container.component';
 import { DialogWindowComponent } from './dialog-window/dialog-window.component';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -12,7 +11,6 @@ import { DialogCloseDirective, DialogContentDirective } from './dialog-window/di
 
 @NgModule({
   declarations: [
-    DialogsContainerComponent,
     DialogWindowComponent,
     DialogComponent,
     DialogActionsComponent,
@@ -20,7 +18,6 @@ import { DialogCloseDirective, DialogContentDirective } from './dialog-window/di
     DialogContentDirective
   ],
   entryComponents: [
-    DialogsContainerComponent,
     DialogWindowComponent
   ],
   exports: [

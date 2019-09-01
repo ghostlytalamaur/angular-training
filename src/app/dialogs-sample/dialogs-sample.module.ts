@@ -4,7 +4,7 @@ import { SampleDialogContentComponent } from './dialog-sample/sample-dialog-cont
 import { DialogsModule } from '../dialogs/dialogs.module';
 import { RouterModule } from '@angular/router';
 import { DialogWindowSampleComponent } from './dialog-sample/dialog-window-sample.component';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule } from '@angular/material';
 
 
 @NgModule({
@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material';
     CommonModule,
     DialogsModule,
     MatButtonModule,
+    MatDialogModule,
     RouterModule.forChild([{ path: 'dialogs', component: DialogWindowSampleComponent }]),
   ]
 })

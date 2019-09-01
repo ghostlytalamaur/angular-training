@@ -1,5 +1,5 @@
-import { Directive, HostBinding, HostListener } from '@angular/core';
-import { DialogRef } from '../dialog-ref';
+import { Directive, HostBinding, HostListener, Inject } from '@angular/core';
+import { DIALOG_CONTROLLER, DialogController } from './dialog-controller';
 
 @Directive({
   selector: '[appDlgClose]'
@@ -7,13 +7,13 @@ import { DialogRef } from '../dialog-ref';
 export class DialogCloseDirective {
 
   constructor(
-    private readonly dlgRef: DialogRef<any>
+    @Inject(DIALOG_CONTROLLER) private readonly controller: DialogController
   ) {
   }
 
   @HostListener('click')
   closeDialog() {
-    setTimeout(() => this.dlgRef.close(), 0);
+    setTimeout(() => this.controller.close(), 0);
   }
 }
 

@@ -1,4 +1,4 @@
-import { Injector, Type } from '@angular/core';
+import { InjectionToken, Injector, Type } from '@angular/core';
 
 export interface DialogConfig<C> {
   // A title of a dialog
@@ -10,3 +10,5 @@ export interface DialogConfig<C> {
   // Doesn't allow maximize dialog. Default is false
   blockMaximize?: boolean;
 }
+
+export const DIALOG_CONFIG = new InjectionToken<DialogConfig<any>>('dialog-config');

@@ -1,28 +1,11 @@
-import { DialogController } from '../dialog-window/dialog-controller';
+import { DialogController, DialogsContainerRef } from './dialog-window/dialog-controller';
 
-export class DialogsContainerService {
+export class DialogsContainer implements DialogsContainerRef {
   private dialogsMap: Map<string, DialogController>;
   private stack: string[] = [];
 
   constructor() {
     this.dialogsMap = new Map<string, DialogController>();
-  }
-
-  closeAll(): void {
-    if (this.dialogsMap.size === 0) {
-      return;
-    }
-    for (const dialogId of this.dialogsMap.keys()) {
-      this.closeDialog(dialogId);
-    }
-    this.dialogsMap.clear();
-  }
-
-  closeDialog(dialogId: string) {
-    const dialog = this.getDialog(dialogId);
-    if (dialog) {
-      dialog.close();
-    }
   }
 
   bringToFront(dialogId: string) {

@@ -1,4 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, TemplateRef } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 @Component({
   template: `
@@ -33,16 +34,30 @@ import { Component, OnDestroy } from '@angular/core';
           </app-dialog-content>
 
           <app-dialog-actions>
+              <button mat-flat-button (click)="onShowMatDialog(tmpl)">Show MatDialog</button>
               <button mat-flat-button (click)="onCancel()" appDlgClose color="warn">Cancel</button>
           </app-dialog-actions>
       </app-dialog>
+
+      <ng-template #tmpl>
+          <p>Hello from MatDialog!</p>
+      </ng-template>
   `,
   styleUrls: ['sample-dialog-content.component.scss']
 })
 export class SampleDialogContentComponent implements OnDestroy {
 
+  constructor(
+    private readonly dialog: MatDialog
+  ) {
+  }
+
   onCancel(): void {
     console.log('Cancel button clicked');
+  }
+
+  onShowMatDialog(tmpl: TemplateRef<any>): void {
+    this.dialog.open(tmpl);
   }
 
   ngOnDestroy(): void {

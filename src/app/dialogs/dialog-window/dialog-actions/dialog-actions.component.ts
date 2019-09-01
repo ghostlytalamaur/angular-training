@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 
 @Component({
   selector: 'app-dialog-actions',
-  templateUrl: 'dialog-actions.component.html',
+  template: '<ng-content></ng-content>',
   styleUrls: ['dialog-actions.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush

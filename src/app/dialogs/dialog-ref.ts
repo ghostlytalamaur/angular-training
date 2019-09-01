@@ -8,24 +8,8 @@ export class DialogRef<C> {
   ) {
   }
 
-  maximize(): void {
-    this.controller.maximize();
-  }
-
-  restore(): void {
-    this.controller.restore();
-  }
-
-  toggleMaximize(): void {
-    this.controller.toggleMaximize();
-  }
-
   close(): void {
     this.controller.close();
-  }
-
-  bringToFront(): void {
-    this.controller.bringToFront();
   }
 
 }
