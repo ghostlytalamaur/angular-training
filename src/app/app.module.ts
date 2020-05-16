@@ -8,7 +8,7 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FlexBoxesComponent } from './flex-boxes/flex-boxes.component';
 import { DialogsSampleModule } from './dialogs-sample/dialogs-sample.module';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({

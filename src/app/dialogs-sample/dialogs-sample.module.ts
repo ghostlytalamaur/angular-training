@@ -4,7 +4,10 @@ import { SampleDialogContentComponent } from './dialog-sample/sample-dialog-cont
 import { DialogsModule } from '../dialogs/dialogs.module';
 import { RouterModule } from '@angular/router';
 import { DialogWindowSampleComponent } from './dialog-sample/dialog-window-sample.component';
-import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatInputModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 
 
