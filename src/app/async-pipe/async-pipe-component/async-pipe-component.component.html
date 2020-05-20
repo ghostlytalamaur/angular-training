@@ -1,0 +1,8 @@
+<app-async-pipe-child-component
+  caption="Single stream"
+  [data]="singleStream$ | async"
+></app-async-pipe-child-component>
+<app-async-pipe-child-component
+  caption="New stream"
+  [data]="data$ | async"
+></app-async-pipe-child-component>

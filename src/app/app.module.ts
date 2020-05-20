@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FlexBoxesComponent } from './flex-boxes/flex-boxes.component';
 import { DialogsSampleModule } from './dialogs-sample/dialogs-sample.module';
 import { MatButtonModule } from '@angular/material/button';
+import { AsyncPipeModule } from './async-pipe/async-pipe.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
     FilePickerModule,
     DialogsSampleModule,
-    AppRoutingModule
+    AsyncPipeModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

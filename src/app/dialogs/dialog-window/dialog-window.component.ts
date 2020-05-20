@@ -40,7 +40,7 @@ export class DialogWindowComponent implements OnInit, OnDestroy, DialogInterface
 
   constructor(
     @Inject(DIALOG_CONTROLLER) private readonly controller: DialogController,
-    @Inject(DIALOG_CONFIG) private readonly config: DialogConfig<any>,
+    @Inject(DIALOG_CONFIG) public readonly config: DialogConfig<any>,
   ) {
   }
 
