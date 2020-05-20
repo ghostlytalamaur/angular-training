@@ -23,6 +23,7 @@ import { AsyncPipeModule } from './async-pipe/async-pipe.module';
     BrowserAnimationsModule,
     MatButtonModule,
     FilePickerModule,
+
     DialogsSampleModule,
     AsyncPipeModule,
     AppRoutingModule,
