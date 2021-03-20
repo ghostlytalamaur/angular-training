@@ -14,17 +14,19 @@ export interface DialogsContainerRef {
 }
 
 export class DialogController {
-  readonly dragged$: Observable<boolean>;
+
+  public readonly dragged$: Observable<boolean>;
+  public readonly maximized$: Observable<boolean>;
+  public readonly draggable$: Observable<boolean>;
+
   private dialog: DialogInterface | undefined;
   private overlayRef: OverlayRef | undefined;
   private dragRef: DragRef<any> | undefined;
-  private storedPos: { x: number, y: number };
+  private storedPos: { x: number; y: number };
   private readonly maximized: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private subscription: Subscription | undefined;
 
-  readonly maximized$: Observable<boolean> = this.maximized.asObservable();
   private readonly draggable: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  readonly draggable$: Observable<boolean> = this.draggable.asObservable();
 
   constructor(
     private readonly id: string,
@@ -32,6 +34,8 @@ export class DialogController {
     overlayRef: OverlayRef,
     private readonly dragDrop: DragDrop
   ) {
+    this.maximized$ = this.maximized.asObservable();
+    this.draggable$ = this.draggable.asObservable();
     this.overlayRef = overlayRef;
     this.subscription = this.overlayRef.detachments()
       .subscribe(() => this.dispose());

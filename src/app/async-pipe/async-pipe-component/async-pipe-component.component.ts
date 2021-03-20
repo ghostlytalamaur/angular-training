@@ -28,7 +28,7 @@ export class AsyncPipeComponentComponent extends RxComponent implements OnInit, 
       )
       .subscribe(value => {
         this.data$ = of(value).pipe(delay(300));
-      })
+      });
   }
 
   public ngOnDestroy(): void {

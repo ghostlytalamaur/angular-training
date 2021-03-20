@@ -166,8 +166,7 @@ export class FilePickerComponent implements OnInit {
       readProgress.next(newProgress);
     };
 
-    const readFile = (file: File): Promise<ArrayBuffer> => {
-      return new Promise<ArrayBuffer>((resolve, ignored) => {
+    const readFile = (file: File): Promise<ArrayBuffer> => new Promise<ArrayBuffer>((resolve, ignored) => {
         const reader = new FileReader();
         reader.onprogress = function(this: FileReader, ev: ProgressEvent): any {
           loadedBytes.set(file, ev.loaded);
@@ -183,7 +182,6 @@ export class FilePickerComponent implements OnInit {
 
         reader.readAsArrayBuffer(file);
       });
-    };
 
     readProgress.next(0);
     files.map(file => readFile(file));

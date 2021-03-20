@@ -1,6 +1,7 @@
 import { OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 
+// TODO: Add Angular decorator.
 export class RxComponent implements OnDestroy {
 
   protected readonly destroy$ = new Subject<void>();
@@ -10,7 +11,7 @@ export class RxComponent implements OnDestroy {
     this.ngOnDestroy = () => {
       fn();
       this.cleanupSubscriptions();
-    }
+    };
   }
   public ngOnDestroy(): void {
   }
